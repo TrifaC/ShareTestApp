@@ -14,12 +14,14 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Image,
   Text,
   useColorScheme,
   View,
   Button,
 } from 'react-native';
 import Share from 'react-native-share';
+import ImgToBase64 from 'react-native-image-base64';
 
 import {
   Colors,
@@ -32,7 +34,10 @@ import {
 import ShareButton from './src/components/ShareButton';
 import MainSection from './src/components/MainSection';
 
-const url = '';
+import images from './src/asset/images/imagesBase64';
+
+// The attribute to setting the share function.
+// const url = '/home/hkuit155/Trifa_RN_Project/ShareFunctionTestProject/src/asset/images/logo.jpg';
 const title = 'Share via';
 const message = 'Share today workout to';
 const options = Platform.select({
@@ -42,7 +47,7 @@ const options = Platform.select({
   default: {
     title:  'FBI Warming',
     message: 'Share today workout to',
-    url: '',
+    url: images.image1,
   },
 });
 
@@ -54,6 +59,13 @@ const onShare = async () => {
       alert(error.message);
     }
 };
+
+// The block to transfer image into base 64
+const testBase64Func = async() => {
+  ImgToBase64.getBase64String('file://src/asset/images/logo.jpg')
+  .then(base64String => console.log(base64String))
+  .catch(err =>  console.log(err));
+}
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -67,7 +79,7 @@ const App: () => Node = () => {
         <Header />
         <View style={{backgroundColor: isDarkMode ? Colors.black : Colors.white,}}>
           <MainSection title="Test Share Button">
-             <ShareButton onPress={onShare} title="Share"/>
+             <ShareButton onPress={testBase64Func} title="Share"/>
           </MainSection>
           <MainSection title="Learn More">
             Read the docs to discover what to do next:
